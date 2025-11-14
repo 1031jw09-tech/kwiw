@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoMedia 환경 체험 웹앱</title>
+  <style>
+    body {
+      font-family: "Pretendard", sans-serif;
+      margin: 0;
+      background-color: #f2f8f5;
+      color: #222;
+    }
+    header {
+      background: linear-gradient(135deg, #74c69d, #52b788);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    section {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #40916c;
+      margin-bottom: 1rem;
+    }
+    .cases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    .case-card {
+      background: #e9f5ee;
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    .case-card:hover {
+      background: #c7e8d4;
+      transform: scale(1.05);
+    }
+    .chat-box {
+      height: 250px;
+      overflow-y: auto;
+      background: #f8fff9;
+      border: 1px solid #ccc;
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .chat-msg {
+      margin: 0.5rem 0;
+      padding: 0.5rem 1rem;
+      background: #d8f3dc;
+      border-radius: 0.8rem;
+    }
+    .quiz-question {
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: #eefaf1;
+    }
+    button {
+      background: #52b788;
+      color: white;
+      border: none;
+      border-radius: 0.8rem;
+      padding: 0.7rem 1.2rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background: #40916c; }
+    .videos iframe {
+      width: 100%;
+      height: 230px;
+      border: none;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+    footer {
+      background: #d8f3dc;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    @media (max-width: 800px) {
+      main { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>EcoMedia 환경 체험 웹앱</header>
+  <main>
+    <!-- 왼쪽: 핵심 과제 + 환경 사례 + 채팅 -->
+    <section>
+      <h2>1) 전공 관점의 핵심 과제</h2>
+      <p>🎬 <strong>영상·미디어 전공</strong>의 시선으로 볼 때, 환경 문제의 핵심 과제는 <strong>‘무관심에서 공감으로 전환’</strong>하는 것이다.</p>
+      <p>기후 변화나 생태 위기를 단순한 데이터가 아닌 ‘사람의 이야기’로 전달해야 한다. 미디어는 감정을 움직여 행동 변화를 만들 수 있다.</p><h2>2) 해결 아이디어</h2>
+  <p><strong>아이디어:</strong> 시민이 촬영한 환경 영상을 모아 온라인 다큐멘터리로 제작하는 <em>“우리의 지구, 우리의 시선”</em> 캠페인.</p>
+  <p>영상 전공자의 편집·스토리 기술로 작은 행동의 가치를 강조한다.</p>
+
+  <h2>3) 현재 좋지 않은 환경 사례</h2>
+  <div class="cases">
+    <div class="case-card" data-topic="해양 오염">🌊 해양 오염</div>
+    <div class="case-card" data-topic="산림 파괴">🌲 산림 파괴</div>
+    <div class="case-card" data-topic="대기 오염">🌫️ 대기 오염</div>
+    <div class="case-card" data-topic="기후 변화">🔥 기후 변화</div>
+  </div>
+
+  <h2 style="margin-top:2rem;">4) 해결방안 채팅 공간</h2>
+  <div id="selectedCase" style="font-weight:bold; color:#1b4332;">문제를 선택하세요!</div>
+  <div class="chat-box" id="chatBox"></div>
+  <input type="text" id="chatInput" placeholder="해결 아이디어를 입력하세요" style="width:80%;padding:0.6rem;border-radius:0.5rem;border:1px solid #ccc;">
+  <button id="sendBtn">전송</button>
+</section>
+
+<!-- 오른쪽: 퀴즈 + 추천 영상 -->
+<section>
+  <h2>5) 환경 퀴즈 도전!</h2>
+  <div id="quizContainer"></div>
+  <button id="checkBtn">채점하기</button>
+  <p id="score"></p>
+
+  <h2 style="margin-top:2rem;">6) 추천 환경 영상</h2>
+  <div class="videos">
+    <iframe src="https://www.youtube.com/embed/TQaJjMGeU74" title="KBS 다큐 '기후 위기의 시대'"></iframe>
+    <iframe src="https://www.youtube.com/embed/EtW2rrLHs08" title="BBC Earth Climate Documentary"></iframe>
+  </div>
+</section>
+
+  </main>  <footer>
+    © 2025 EcoMedia Project — 영상으로 바꾸는 지구의 내일
+  </footer>  <!-- ===== 자동재생 음악 3개 추가 ===== -->  <iframe src="https://www.mureka.ai/ko/song-detail/L3f5YVTvkTnHR54fWWvpxK?is_from_share=1&autoplay=1&loop=1&muted=1" allow="autoplay" style="width:0;height:0;border:0;"></iframe>
+  <iframe src="https://www.mureka.ai/ko/song-detail/L3f5YVTvkTnHR54fWWvpxK?is_from_share=1&autoplay=1&loop=1&muted=1" allow="autoplay" style="width:0;height:0;border:0;"></iframe>
+  <iframe src="https://www.mureka.ai/ko/song-detail/L3f5YVTvkTnHR54fWWvpxK?is_from_share=1&autoplay=1&loop=1&muted=1" allow="autoplay" style="width:0;height:0;border:0;"></iframe>  <script>
+    // ==== 채팅 기능 ====
+    const cards = document.querySelectorAll(".case-card");
+    const selectedCase = document.getElementById("selectedCase");
+    const chatBox = document.getElementById("chatBox");
+    const chatInput = document.getElementById("chatInput");
+    const sendBtn = document.getElementById("sendBtn");
+    let currentTopic = "";
+    let chats = JSON.parse(localStorage.getItem("ecoChats") || "{}");
+
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        currentTopic = card.dataset.topic;
+        selectedCase.textContent = "💬 " + currentTopic + "에 대한 해결방안 나누기";
+        renderChats();
+      });
+    });
+
+    function renderChats() {
+      chatBox.innerHTML = "";
+      if (!chats[currentTopic]) chats[currentTopic] = [];
+      chats[currentTopic].forEach(msg => {
+        const div = document.createElement("div");
+        div.className = "chat-msg";
+        div.textContent = msg;
+        chatBox.appendChild(div);
+      });
+    }
+
+    sendBtn.addEventListener("click", () => {
+      const text = chatInput.value.trim();
+      if (!text || !currentTopic) return;
+      chats[currentTopic].push(text);
+      localStorage.setItem("ecoChats", JSON.stringify(chats));
+      chatInput.value = "";
+      renderChats();
+    });
+
+    // ==== 퀴즈 기능 ====
+    const quizData = [
+      { q: "1. 온실가스 중 가장 큰 비중을 차지하는 것은?", a: ["이산화탄소", "메탄", "프레온가스"], correct: 0 },
+      { q: "2. 플라스틱 쓰레기가 가장 많이 흘러드는 곳은?", a: ["사막", "바다", "산"], correct: 1 },
+      { q: "3. 나무 한 그루가
